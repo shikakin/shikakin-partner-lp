@@ -1,0 +1,308 @@
+<!--
+シカキンLP 量産用マスターテンプレート Ver2（複数スタッフ・写真枠固定版）
+使い方：このファイル下部の SHIKAKIN_LP_CONFIG だけ編集します。
+医院HP URLをもらったら、以下の項目に反映してください。
+
+主な差し替え項目：
+- sourceWebsiteUrl 医院HP
+- clinicName 院名
+- doctors 歯科医師一覧（複数名対応：役割・肩書き・氏名・写真）
+- therapists シカキンセラピスト一覧（複数名対応：氏名・写真）
+- staff photos 医師・セラピスト共通で写真枠320×427固定、3:4表示、object-fit:cover、カード高さ統一
+- directorName / directorRole / therapistName は旧形式互換用
+- reservationUrl WEB予約URL
+- lineUrl LINE相談URL
+- address 郵便番号・住所
+- tel 電話番号
+- access アクセス
+- images 院長写真・セラピスト写真・症状画像など
+- concerns / dentalSymptoms / beautySymptoms 症状リスト
+
+固定推奨：配色・フォント・シカキン説明・推薦メッセージ・FAQ・セクション順
+-->
+<!DOCTYPE html>
+
+<html lang="ja">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title data-shikakin-title="">シカキンLPテンプレート | 歯科筋筋膜セラピー</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&amp;family=Noto+Serif+JP:wght@200;300;400&amp;family=Shippori+Mincho:wght@300;400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --gold: #C9A84C;
+    --gold-light: #E8D5A3;
+    --gold-pale: #F5EDD6;
+    --gold-dark: #8B6914;
+    --ivory: #FDFAF4;
+    --ivory-deep: #F7F1E6;
+    --white: #FFFFFF;
+    --charcoal: #2C2820;
+    --warm-gray: #71695f;
+    --cream-line: rgba(201,168,76,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ivory);
+    color: var(--charcoal);
+    font-family: 'Shippori Mincho', 'Noto Serif JP', serif;
+    overflow-x: hidden;
+    line-height: 1.8;
+    word-break: normal;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.025'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 12px 16px;
+    display: flex;
+    gap: 12px;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(253,250,244,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--cream-line);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    color: var(--gold-dark);
+    font-weight: 400;
+    line-height: 1.35;
+    max-width: 62%;
+  }
+
+  .nav-logo span {
+    color: var(--charcoal);
+    font-size: 0.56rem;
+    letter-spacing: 0.08em;
+    display: block;
+    font-family: 'Shippori Mincho', serif;
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .nav-cta {
+    display: inline-block;
+    padding: 8px 12px;
+    border: 1px solid var(--gold);
+    color: var(--gold-dark);
+    text-decoration: none;
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    white-space: nowrap;
+    background: rgba(255,255,255,0.45);
+  }
+
+  #hero {
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 48px 20px 56px;
+    overflow: hidden;
+  }
+
+  .hero-bg-line {
+    position: absolute;
+    right: -40%;
+    top: 0;
+    width: 90%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--ivory-deep) 0%, var(--gold-pale) 60%, var(--ivory) 100%);
+    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0% 100%);
+    opacity: 0.7;
+  }
+
+  .hero-ornament {
+    position: absolute;
+    right: -120px;
+    top: 42px;
+    width: 260px;
+    height: 260px;
+    border: 1px solid rgba(201,168,76,0.16);
+    border-radius: 50%;
+  }
+
+  .hero-ornament::before,
+  .hero-ornament::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.10);
+  }
+
+  .hero-ornament::before { inset: 18px; }
+  .hero-ornament::after { inset: 36px; }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 100%;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.64rem;
+    letter-spacing: 0.22em;
+    color: var(--gold-dark);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .hero-eyebrow::before,
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
+    font-size: clamp(2.05rem, 10vw, 3.1rem);
+    font-weight: 300;
+    line-height: 1.25;
+    color: var(--charcoal);
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+
+  .hero-subtitle-ja {
+    font-size: 0.98rem;
+    font-weight: 400;
+    line-height: 1.85;
+    color: var(--charcoal);
+    margin-bottom: 14px;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-desc {
+    font-size: 0.82rem;
+    line-height: 2;
+    color: var(--warm-gray);
+    margin-bottom: 28px;
+    letter-spacing: 0.02em;
+  }
+
+  .hero-desc br { display: none; }
+
+  .hero-buttons,
+  .closing-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    display: block;
+    text-align: center;
+    padding: 15px 18px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+    color: var(--white);
+    box-shadow: 0 16px 30px rgba(139,105,20,0.15);
+  }
+
+  .btn-secondary {
+    border: 1px solid var(--gold);
+    color: var(--gold-dark);
+    background: rgba(255,255,255,0.42);
+  }
+
+  section { padding: 64px 20px; }
+
+  .section-eyebrow {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.66rem;
+    letter-spacing: 0.28em;
+    color: var(--gold);
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
+    font-size: clamp(1.55rem, 7vw, 2.3rem);
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold-dark);
+  }
+
+  .gold-divider {
+    width: 54px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin: 18px 0 28px;
+  }
+
+  .section-body {
+    font-size: 0.88rem;
+    line-height: 2.05;
+    color: var(--warm-gray);
+    letter-spacing: 0.02em;
+    max-width: 100%;
+  }
+
+  .section-body br { display: none; }
+
+  #concerns,
+  #symptoms {
+    background: var(--charcoal);
+    position: relative;
+    overflow: hidden;
+  }
+
+  #concerns::before {
+    content: '';
+    position: absolute;
+    top: -120px;
+    right: -160px;
+    width: 360px;
+    height: 360px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    opacity: 0.07;
+  }
+
+  #concerns .section-title {
+
+    color: var(--i
