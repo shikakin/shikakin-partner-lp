@@ -1,0 +1,43 @@
+name: Import Fukuoka TDC LP
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-fukuoka-tdc.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Fetch published ChatGPT site
+        run: |
+          mkdir -p fukuoka-tdc
+          curl -L --fail --silent --show-error \
+            'https://shikakin-partners.workspace-637507.chatgpt.site/' \
+            -o fukuoka-tdc/index.html
+          test -s fukuoka-tdc/index.html
+
+      - name: Verify HTML
+        run: |
+          grep -qi '<!DOCTYPE html' fukuoka-tdc/index.html || grep -qi '<html' fukuoka-tdc/index.html
+          wc -c fukuoka-tdc/index.html
+
+      - name: Commit imported LP
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fukuoka-tdc/index.html
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+          git commit -m "Import Fukuoka TDC LP"
+          git push
