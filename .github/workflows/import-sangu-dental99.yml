@@ -1,0 +1,29 @@
+name: Import Sangu Dental99 LP
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-sangu-dental99.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Import Sangu LP
+        run: |
+          mkdir -p sangu-dental99
+          curl -L --fail --silent --show-error 'https://raw.githubusercontent.com/shikakin/utoh-shikakin/main/sangu-dental99/index.html' -o sangu-dental99/index.html
+          test -s sangu-dental99/index.html
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sangu-dental99/index.html
+          git commit -m "Import Sangu Dental99 LP" || exit 0
+          git push
