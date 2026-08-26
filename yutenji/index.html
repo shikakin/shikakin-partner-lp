@@ -308,7 +308,6 @@
   #concerns .section-title,
   #symptoms .section-title { color: var(--ivory); }
 
-
   #concerns .gold-divider,
   #symptoms .gold-divider { background: linear-gradient(90deg, var(--gold-light), transparent); }
 
@@ -708,11 +707,10 @@
     flex-direction: column;
     gap: 0;
     margin-top: 36px;
-    border-top: 1px solid var(--cream-line);
   }
 
   .faq-item {
-    border-bottom: 1px solid var(--cream-line);
+    border-bottom: 1px solid rgba(201,168,76,0.25);
     overflow: hidden;
   }
 
@@ -795,10 +793,10 @@
   }
 
   .closing-title {
-    font-family: 'Cormorant Garamond', 'Shippori Mincho',serif;
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
     font-size: clamp(1.65rem, 7vw, 2.4rem);
     font-weight: 300;
-    line-height: 1.5;
+    line-height: 1.55;
     color: var(--charcoal);
     margin-bottom: 22px;
   }
@@ -809,7 +807,7 @@
   }
 
   .closing-body {
-    font-size: 0.84rem;
+    font-size: 0.88rem;
     line-height: 2.05;
     color: var(--warm-gray);
     letter-spacing: 0.02em;
@@ -830,7 +828,7 @@
   }
 
   .footer-logo {
-    font-family: 'Cormorant Garamond', 'Shippori Mincho',serif;
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
     font-size: 1rem;
     color: var(--gold-light);
     letter-spacing: 0.08em;
@@ -849,7 +847,7 @@
     left: 12px;
     right: 12px;
     bottom: 12px;
-    Z-index: 200;
+    z-index: 200;
     display: block;
     text-align: center;
     padding: 14px 18px;
@@ -867,96 +865,387 @@
     transform: none;
   }
 
+  @media (min-width: 760px) {
+    nav { padding: 18px 44px; }
+    .nav-logo { font-size: 1.25rem; max-width: none; letter-spacing: 0.12em; }
+    .nav-logo span { font-size: 0.65rem; letter-spacing: 0.24em; }
+    .nav-cta { padding: 10px 28px; font-size: 0.7rem; letter-spacing: 0.2em; }
+
+    #hero {
+      min-height: 92vh;
+      padding: 120px 60px 80px;
+    }
+
+    .hero-bg-line {
+      right: 0;
+      width: 55%;
+      opacity: 1;
+      clip-path: polygon(8% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    .hero-ornament {
+      right: 8%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 420px;
+      height: 420px;
+      animation: slowSpin 30s linear infinite;
+    }
+
+    @keyframes slowSpin {
+      from { transform: translateY(-50%) rotate(0deg); }
+      to { transform: translateY(-50%) rotate(360deg); }
+    }
+
+    .hero-content { max-width: 580px; }
+    .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.4em; gap: 16px; }
+    .hero-eyebrow::before, .hero-eyebrow::after { width: 40px; }
+
+    .hero-title { font-size: clamp(2.6rem, 4vw, 3.8rem); }
+    .hero-subtitle-ja { font-size: clamp(1rem, 2vw, 1.3rem); line-height: 2; }
+    .hero-desc { font-size: 0.86rem; line-height: 2.25; }
+    .hero-desc br { display: inline; }
+
+    .hero-buttons,
+    .closing-buttons {
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      display: inline-block;
+      min-width: 220px;
+      padding: 16px 34px;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+    }
+
+    section { padding: 100px 60px; }
+    .section-body br { display: inline; }
+
+    .concerns-grid {
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      margin-top: 60px;
+    }
+
+    .concern-item { padding: 28px 32px; }
+    .concerns-note { padding: 32px 40px; }
+
+    .why-layout,
+    .beauty-layout,
+    .symptoms-layout,
+    .diff-layout {
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .why-visual { max-width: 460px; }
+
+    .therapy-steps {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      position: relative;
+      margin-top: 60px;
+    }
+
+    .therapy-steps::before {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 42px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), var(--gold), transparent);
+    }
+
+    .therapy-step {
+      text-align: center;
+      padding: 0 20px 40px;
+      background: transparent;
+      border: none;
+    }
+
+    .step-number {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-num-text { font-size: 1.8rem; }
+    .step-title { font-size: 0.88rem; }
+    .step-body { font-size: 0.75rem; line-height: 2; }
+
+    .symptoms-layout,
+    .diff-layout,
+    .beauty-layout,
+    .testimonial-grid,
+    .faq-list {
+      margin-top: 60px !important;
+    }
+
+    .symptom-group { padding: 40px; }
+    .diff-card { padding: 48px 40px; }
+    .beauty-card { padding: 32px 36px; }
+    .beauty-card-body br,
+    .beauty-quote-text br,
+    .closing-body br { display: inline; }
+
+    .beauty-right {
+      position: sticky;
+      top: 110px;
+    }
+
+    .testimonial-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+
+    .testimonial-card { padding: 40px 36px; }
+
+    #closing { padding: 120px 60px; }
+
+    footer {
+      padding: 48px 60px;
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+
+    .mobile-fixed-cta { display: none; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* ===== PHOTO TEMPLATE EXTENSIONS ===== */
+  .photo-frame {
+    border: 1px solid rgba(201,168,76,0.22);
+    background: rgba(255,255,255,0.55);
+    padding: 10px;
+    box-shadow: 0 18px 60px rgba(44,40,32,0.08);
+  }
+
+  .photo-frame img,
+  .image-card img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items: center;
+  }
+
+  .profile-name {
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+    color: var(--charcoal);
+    font-weight: 300;
+    line-height: 1.45;
+    margin-bottom: 14px;
+  }
+
+  .profile-role {
+    font-size: 0.78rem;
+    color: var(--gold-dark);
+    letter-spacing: 0.13em;
+    margin-bottom: 20px;
+  }
+
+  .profile-note {
+    border-left: 1px solid var(--gold);
+    padding-left: 18px;
+    margin-top: 22px;
+    font-size: 0.82rem;
+    color: var(--warm-gray);
+    line-height: 1.9;
+  }
+
   .image-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 14px;
-    margin-top: 28px;
+    gap: 18px;
+    margin-top: 34px;
   }
 
   .image-card {
-    overflow: hidden;
-    border: 1px solid rgba(201,168,76,0.16);
-    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(201,168,76,0.18);
+    background: rgba(255,255,255,0.58);
+    padding: 10px;
   }
 
   .image-card img {
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
-    display: block;
+    aspect-ratio: 4 / 3;
+  }
+
+  .image-card-wide img {
+    aspect-ratio: 16 / 9;
   }
 
   .image-caption {
-    font-size: 0.64rem;
-    letter-spacing: 0.06em;
+    padding: 14px 8px 4px;
+    font-size: 0.78rem;
     color: var(--warm-gray);
-    padding: 12px 14px;
-    line-height: 1.7;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
   }
 
-  #clinic-scene {
-    background: var(--ivory);
+  @media (min-width: 760px) {
+    .profile-layout {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 70px;
+    }
+
+    .profile-layout.reverse {
+      grid-template-columns: 1.15fr 0.85fr;
+    }
+
+    .profile-layout.reverse .profile-photo { order: 2; }
+    .profile-layout.reverse .profile-text { order: 1; }
+
+    .image-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 48px;
+    }
   }
+
+
+
 
   .scene-layout {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 24px;
-    margin-top: 36px;
-    align-items: start;
-  }
-
-  .photo-frame {
-    border: 1px solid rgba(201,168,76,0.25);
-    padding: 6px;
-    background: rgba(255,255,255,0.5);
-  }
-
-  .photo-frame img {
-    width: 100%;
-    height: 240px;
-    object-fit: cover;
-    display: block;
+    gap: 32px;
+    align-items: center;
+    margin-top: 42px;
   }
 
   .scene-copy-box {
-    background: var(--charcoal);
     padding: 28px 22px;
-    border: 1px solid rgba(201,168,76,0.2);
+    border: 1px solid rgba(201,168,76,0.18);
+    background: rgba(255,255,255,0.58);
   }
 
   .scene-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.58rem;
-    letter-spacing: 0.22em;
+    font-size: 0.62rem;
+    letter-spacing: 0.24em;
     color: var(--gold);
     margin-bottom: 14px;
+    text-transform: uppercase;
   }
 
   .scene-title {
-    font-size: 1.02rem;
-    color: var(--ivory);
-    line-height: 1.9;
-    letter-spacing: 0.02em;
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
+    font-size: clamp(1.35rem, 6vw, 2rem);
+    font-weight: 300;
+    color: var(--charcoal);
+    line-height: 1.55;
     margin-bottom: 14px;
-  }
-
-  .scene-copy-box .section-body {
-    color: rgba(253,250,244,0.76);
-  }
-
-  #care-scene {
-    background: var(--ivory-deep);
   }
 
   .care-gallery {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 14px;
-    margin-top: 36px;
+    gap: 18px;
+    margin-top: 42px;
   }
 
+  @media (min-width: 760px) {
+    .scene-layout {
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 70px;
+      margin-top: 58px;
+    }
+
+    .care-gallery {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 58px;
+    }
+  }
+
+  .is-hidden { display: none !important; }
+
+  /* ===== EXPERT PHOTO SIZE FIX: testimonial photos only ===== */
+  .testimonial-grid {
+    align-items: stretch;
+  }
+
+  .testimonial-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .testimonial-photo {
+    width: 80% !important;
+    height: 260px !important;
+    margin: 0 auto 28px !important;
+    border-radius: 0 !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(201,168,76,0.22) !important;
+    background: #FFFFFF !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .testimonial-photo img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    object-position: center center !important;
+    display: block !important;
+    border-radius: 0 !important;
+    background: #FFFFFF !important;
+  }
+
+  .testimonial-name,
+  .testimonial-title,
+  .testimonial-text,
+  .quote-mark {
+    align-self: stretch;
+  }
+
+  @media (min-width: 760px) {
+    .testimonial-card {
+      min-height: 620px;
+    }
+    .testimonial-photo {
+      height: 250px !important;
+    }
+  }
+
+  @media (max-width: 759px) {
+    .testimonial-photo {
+      width: 82% !important;
+      height: 260px !important;
+    }
+  }
+
+
+
+  /* ===== MULTI STAFF TEMPLATE EXTENSIONS v3: FIXED STAFF CARD SYSTEM =====
+     目的：歯科医師・シカキンセラピストが何名になっても、写真枠・顔の見え方・カード幅を統一する。
+     重要：auto-fit で 1名カードが横に伸びないよう、カード最大幅と固定グリッド幅を設定する。
+  */
   .staff-section {
     background: var(--ivory);
   }
@@ -966,7 +1255,7 @@
   }
 
   .staff-lead {
-    max-width: 720px;
+    margin-bottom: 34px;
   }
 
   .staff-grid {
@@ -996,16 +1285,904 @@
   /*
     STAFF PHOTO RULE v3
     医師・シカキンセラピスト共通。
-    写真・イラスト・栯閃画像・紲閃画像が混帨して。、�P�上では通じた碶��3�r��ˎ��n떺k�g�
-/�(������S�:���G�����?�3�z���������瑩c�W�?�
-K�n떺k�_���G�B7���G�ޯ����2[�g�
-/��/�V�
-K�>Ϛދ�O�/�
-K�bˎO�(����(����х������Ѽ��(����ݥ�Ѡ������(�����������مȠ���х������Ѽ������Ф�(���������еɅѥ��̀����(�����ٕə���聡������(���������ɽչ��ɝ�����ܰ��İ��������(������ɑ�������ͽ����ɝ�����İ����ذ���ؤ�(�����������聙����(�����������ѕ��聍��ѕ��(�������ѥ�䵍��ѕ��聍��ѕ��(��������͡ɥ�����(���((����х������Ѽ������(����ݥ�Ѡ������(����������������(���������е���聍�ٕ��(���������е��ͥѥ��聍��ѕȀ�Ȕ�(�����������聉�����(���((����х������Ѽ�����������ȁ�(����ݥ�Ѡ������(�����������مȠ���х������Ѽ������Ф�(���������еɅѥ��̀����(�����������聙����(�����������ѕ��聍��ѕ��(�������ѥ�䵍��ѕ��聍��ѕ��(�������е������耝�ɵ�Ʌ�Ё�Ʌ�������͕ɥ��(�������еͥ������ɕ��(�������ѕȵ�����������ɕ��(����������ɝ��������԰������Ȥ�(���((����х�����ф��(�������������������������(�����������(�����������聙����(�������൑�ɕ�ѥ��聍��յ��(��������ѥ�䵍��ѕ��聙����х����(���((����х�����ͥѥ����(�������еͥ������ɕ��(����������مȠ���������ɬ��(�������ѕȵ�����������ѕ��(������ɝ������ѽ������(����������������ĸ��(���������������ȸ�Օ��(���((����х���������(�������е������耝�ɵ�Ʌ�Ё�Ʌ��������M�����ɤ�5�������͕ɥ��(�������еͥ�聍�����ĸ��ɕ�����ܰ�ĸ�ɕ���(����������مȠ�����ɍ�����(�������еݕ���������(����������������ĸ���(���((����х�����є��(������ɝ���ѽ�������(�������еͥ������ɕ��(����������مȠ��݅ɴ��Ʌ��(����������������ĸ���(���((�������������ݥ�Ѡ�����ँ�(������х����ɥ���(�������ɥ��ѕ����є����յ���ɕ���С��Ѽ���а�مȠ���х�����ɐ�ݥ�Ѡ���(���������ѥ�䵍��ѕ��聍��ѕ��(���������������(��������ɝ���ѽ�������(�����((������х�����ɐ��(�������������������(�����(���((�������������ݥ�Ѡ������ँ�(������х����ɥ���(�������ɥ��ѕ����є����յ���ɕ���Р̰�مȠ���х�����ɐ�ݥ�Ѡ���(�����(���((������������ݥ�Ѡ�����ँ�(������х����ɥ���(���������х�����ɐ�ݥ�Ѡ聵�������ఁ���������܀�����त�(���������х������Ѽ�������聍����مȠ���х�����ɐ�ݥ�Ѡ����ĸ�����̤�(�����(���((�����5=	%1�M�����)L����������䤀�����ɍ���х���٥ͥ�������͵����͍ɕ��̀��(����х����ɥ��(����х�������(�����������聝ɥ��������х���(����٥ͥ�������٥ͥ����������х���(������������Ā������х���(�����Ʌ�͙�ɴ聹����������х���(���((����х�����ɐ��(�����������聙����������х���(����٥ͥ�������٥ͥ����������х���(������������Ā������х���(���((����х������Ѽ�(����х�����ф�(����х��������(����х�����ͥѥ����(����٥ͥ�������٥ͥ����������х���(������������Ā������х���(���(���屔�(𽡕���(񉽑��(�؁�ɥ����������
-��ώ+�O�
-ˎ�
-ߎ��̈�(���؁�����􉹅ص������(������������ф�ѕ��􉍱����9�������?�ʇ�����D�玖C������f�������(���������������G��/��/�s�
-���S���;���2�f�������(��𽑥��(��񄁍����􉹅ص�ф����ф��ɕ��х5���Uɰ����ф�ѕ��􉹅�х1�������ɕ�􈍍��ͥ�����_��������:*��O��ۘ]����X�[ۈYH�\�ȏ��]��\��H�\��X��[[�H���]���]��\��H�\��[ܛ�[Y[����]���]��\��H�\��X�۝[����]��\��H�\��Y^YX���ȏ�[�[^[٘\��X[\�\O�]���H�\��H�\��]]H��[OH���۝\�^�N��[\
-����[K����[JN[�KZZY��K�N]\�\�X�[�Ό��[N�ܙX��XZΚ�Y\X[����[��[OH�\�^N�����ȏ��'9�k��h8�dx�'x�i��k�lb��b��j��a9.#z*���n���[����[��[OH�\�^N��������܎���XM��ٛ۝]�ZY��L�X\��[�]��L�^\�Y�Ό�L��ؘJ�N
-Nȏ���8�e��a8ਸ�����x��8��xस� ���[����O���\��H�\��\�X�]KZ�H���b� �x����b�!�8���i��b����do9d.8�b��z  ��b8������k���y�b��b�!�8����x��8������\��H�\��Y\�Ȉ]KZ[H�\��\�ܚ\[ۈ���9��l�y�k���Hx�d9i*yk�fh��i��k�� y�k���y�b��b�!�8����x��8��;�"8�����x�������x��8��;�"xऺ`&��f8�i�� O��ς�9c��do9aax�h8�dx�i��j��c�� y�b� �x����b�!�8���i��b����do9d.8�o��i�d*��x�i�  ��b8�j8��8������x��x��8��8ह�빣#x�e��o��fx� �����]��\��H�\��X�]ۜȏ��H�\��H���\�[X\�H�]KZ�Y�H��SXZ[�\��]K]^H�\���[X\�P�H��Y�H�����[�ȏ�b'yf���:*�8�8>88(�����6�73�&'F��6V6��F'�"�&Vc�"7F�W&�#�8+~8*�8*�8;>8+�8:�89N8;�8�8�������F�c���F�c���6V7F�����6V7F����C�&6��6W&�2#��F�b6�73�'&WfV�#��F�b6�73�'6V7F����W�V'&�r#��W"6��6W&�3��F�c�ƃ"6�73�'6V7F����F�F�R#�8>8)>8�8�h*�8�88.8(�8�8�8)>8�������#��F�b6�73�&v��B�F�f�FW"#���F�c��6�73�'6V7F����&�G�"FFևF���&6��6W&�4�VB"7G��S�&6���#�&v&�#S2�#S�#CB��cR��#��~8�NY(�hI�88�8N8~88(�8X��Y�8�X�n8�8(�8�8Nj��8�yy�8�8#�'#�8+~8*�8*�8;>8+�8:�89N8;�8~8�8j��888~8�8�8�8zؾ�(�8;�zؾ�i�8;�Z{�X�.8;�Y�Y�8�8�8N8�8�8(�8�8~Y
-�8(8n�>8�8�8�8 ������F�c��F�b6�73�&��vR�w&�B&WfV�#��F�b6�73�&��vR�6&B#�Ɩ�r�C�.��8�X�Y(�hI�8*N8:8;�8+�"FF�7&3�'7��F�Ԧt��vR"7&3�&FF���vR��Vs�&6ScB���D6���&t$B��t��e�T7&�vC%F�&ŧ�#$�3Gt�6�3&�U��$�6�6u6�$e'�#$椗�4'�Etg6�#T�Ct�Dt7b�$T�T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$b�$T�$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$T$b�$T�%�t�$�t4UTDU���d$%T$T$D$�4&vt�6wb��3T4�tt4D%Tw4T4Wu$%$�����v6�d$d#5$�F�3Ett&u�v��d6��E�Dd7D��5W�ǃw#�&c�g&���4r���Ssu���w&�v�C���G�%VՃSf2�E3�d�C'Utf���F��#�2�dCcu��t�2��tv���#�Gvfg�TƤ�gV��v�&&d��S�#b���FV�gr�'�&�$F��Fe�G$���6�'5�F����tE$�f�d�c6��&4����#feF�b�v��6WdG'6t&w$vdS�3u�FF�#suw�c$�"��G���d�Ff�V�G�w���cg&�cTw�d�Wt���65%tgC5�TŇVgTs'�f4��$��R�st%Su�d���V�Ed�t�V�fe��Ue5�eT�V��S�"�v#�&F��G�%U%d��E7S��6�S�����Wg&d&3t����%�fצ�tft4WTƖ��sT�eT��5t6����ueW'��R��u�WB�$w�5��S6�Duu�g5dD&D&V�w6&W���U�c�f���Ӆ�S7�dt�&��Ŧ��47F�fT�5�vd#4E�"�vVt�S�$�D��$�v�g4��t��$FF�7ff��G�EV�3GfR���$4���e�6c3�"�g�$wfd�GVc$G4t�v6#SU�FwD��D��g5�4V��'"�'�GCVœ�&��T��u6�G%b���W�f$��gt���f�d�&�#%tt����4d�$v�Ŧ�U����fD�s�dㄷ6���7C�3e�ec2�D���S&���S��c�F��TSDW��T�e��փcvSwEd��6��4�ƤW�Ee�b����$�gfR�$�V�f��EW&�u�C5sC"�ԅ���"�S��u�E�GW��W6�gf�w�U�sT�T�tueT����C�&44r��ķ�6�Tw4U����cF�g�wDs�F�7&�$B�GdtG5�FŦ�SFfTԔ�6sW3V�%C&�E$��2�v4��t$C��vg7�Tv�C73tE4�t�&'�EUuvdF�ԇGg�E'vƖE����5G$�t4�5�%���g"��B�T��3t��3T�4Ǖ�3�&V��3V�f��c&D���u��W%F��u#c&ēc��Gb�����t�'2�%t6�dw��U���FegG"��$5#3V�SEE%�D�fԆev�7f��WCVdTF"���g4����T�CDT�gG�t���W�F#t�3f�&��Vg��V���ec�#tTT7�g%�CB��ė�Ôc�VƷf�d����g�35'E�f#46V�D'��'G��C&���Ŕ6%��U6��D$f6Tw5��'�%seW���&�gg&�d��5��d&�$�B�U5�wuD�uVg�svw����6�t���f�us�6ֳ��T�f�eF������&�g�V�c�E���6�#C$b�3E6�6vs'c&v4��畔פģ�5�GW2�U�T�懔SS�4�G&U6%v%�F�FEd6�$斥&���W��f�d�f�$Scf��4��46R��6d��eVc7uFGv��W�CUgVf7VgE�G�B��f��E7T��g�#5fTŃ�$UWTw��6�2�6g���D��6�St�D�d�e%vU��t�T�uG��$ce�%��vDt��V��T��U7W���6F�eFG��'����5��'�#��c5�7�4Ƥ'�w��G&TGd�&��C�vWR�դ�6��&VfT�W�E�����S&E�#&S�##d���Cr�d�W5��FDW�dve�Ed�w���36D�F3T74��d�vF�GW3cUtv��U4C�u%�V�6g6�St����gWTT��564�SWdt��%v���WGҷ�u���7uc��TF�g��u��4�F6F��GV�3B�U��e5D���R�3�5Dť�T��T'et��Vvb�3#��&wGTR�Ed�s��儦��7'���T&wW6�d�t76&���#b����#���#7�d�Sf�7������%����W%t�"�T'u����wF���G��GD��T4��S'��7�6�T��e�U4��uu$3Vņv�7�st�V��C�򶷇5��Gr�F���4�5��#C�W5�%Et�w�S�&7WV�e%4GE6c4���Tdg6���u'$�%���vee�uwvuD7#4�d�C&�5ug��SdccCG�C�S��&��#T������t35G��%EST�5Df����TvVw&�dⴷC�7s4�TT6��s56�5Et��C��b�Ge4�EdT��&��E4�7ev�$�wuv�$�t泗�����3e��7t�EV�%�%3u��uT���E6����tS��fD��ff$�w6gu#��"��W�g�$�W���GWf�'gG&����S4��B�Cg%C�Uv��D�u5�U�F�E�%WFd��wS�&��UVT�u'�4��ŗsf�%��FÕ�Fcf�Օ��&����F�EV�T6�T�g��%$D�TwD���&�Ǧe4�w��WtV��6d����#eb���f&������t%����3u��eD$E�77G7�ccF��UEv�$C#�5w���u�3�e�g��6Edv�SUW$ħ��WcGFwTe�Ĥ5���3E�f��$S'�e��Ԧ�DR��f�U�C4�w��ft֒��Ƶc'7�e�5EDV7gc�&3WU�S&��b�dG�f34W%'V���wWf���W�CGUWFwdv�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�ׄ���њݒ^�\��[ەJ�M�S�������]S����U��Q��VS�SR��TM�U���^
+    写真・イラスト・横長画像・縦長画像が混在しても、LP上では同じ写真枠に固定する。
+    比率だけでなく「枠の横幅・高さ」を固定し、1名だけ巨大化する事故を防ぐ。
+  */
+  .staff-photo {
+    width: 100%;
+    height: var(--staff-photo-height);
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    background: rgba(247,241,230,0.9);
+    border: 1px solid rgba(201,168,76,0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .staff-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 32%;
+    display: block;
+  }
+
+  .staff-photo-placeholder {
+    width: 100%;
+    height: var(--staff-photo-height);
+    aspect-ratio: 3 / 4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.76rem;
+    letter-spacing: 0.22em;
+    color: rgba(139,105,20,0.42);
+  }
+
+  .staff-meta {
+    padding: 18px 4px 2px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .staff-position {
+    font-size: 0.68rem;
+    color: var(--gold-dark);
+    letter-spacing: 0.14em;
+    margin-bottom: 8px;
+    line-height: 1.8;
+    min-height: 2.45em;
+  }
+
+  .staff-name {
+    font-family: 'Cormorant Garamond', 'Shippori Mincho', serif;
+    font-size: clamp(1.35rem, 5vw, 1.8rem);
+    color: var(--charcoal);
+    font-weight: 300;
+    line-height: 1.45;
+  }
+
+  .staff-note {
+    margin-top: 10px;
+    font-size: 0.78rem;
+    color: var(--warm-gray);
+    line-height: 1.85;
+  }
+
+  @media (min-width: 760px) {
+    .staff-grid {
+      grid-template-columns: repeat(auto-fit, var(--staff-card-width));
+      justify-content: center;
+      gap: 28px;
+      margin-top: 48px;
+    }
+
+    .staff-card {
+      padding: 20px;
+    }
+  }
+
+  @media (min-width: 1180px) {
+    .staff-grid {
+      grid-template-columns: repeat(3, var(--staff-card-width));
+    }
+  }
+
+  @media (max-width: 380px) {
+    .staff-grid {
+      --staff-card-width: min(320px, calc(100vw - 40px));
+      --staff-photo-height: calc(var(--staff-card-width) * 1.333333);
+    }
+  }
+
+
+
+  /* ===== MOBILE-SAFE STAFF DISPLAY FINAL FIX =====
+     スタッフ紹介はスマホでも必ず表示するため、JS依存をやめ、静的HTMLカードを強制表示する。
+  */
+  .staff-grid-mobile-safe,
+  #doctorStaffGrid,
+  #therapistStaffGrid {
+    display: grid !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  #doctorStaffGrid .staff-card,
+  #therapistStaffGrid .staff-card {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  #doctorStaffGrid .staff-photo,
+  #therapistStaffGrid .staff-photo,
+  #doctorStaffGrid .staff-meta,
+  #therapistStaffGrid .staff-meta,
+  #doctorStaffGrid .staff-name,
+  #therapistStaffGrid .staff-name,
+  #doctorStaffGrid .staff-position,
+  #therapistStaffGrid .staff-position {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  #doctorStaffGrid .staff-photo img,
+  #therapistStaffGrid .staff-photo img {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+  }
+
+  @media (max-width: 759px) {
+    .staff-grid-mobile-safe,
+    #doctorStaffGrid,
+    #therapistStaffGrid {
+      --staff-card-width: min(320px, calc(100vw - 48px));
+      --staff-photo-height: calc(var(--staff-card-width) * 1.333333);
+      grid-template-columns: var(--staff-card-width) !important;
+      justify-content: center !important;
+      gap: 24px !important;
+      margin-top: 34px !important;
+      min-height: 1px !important;
+    }
+  }
+
+</style>
+</head>
+<body>
+<!-- NAV -->
+<nav>
+<div class="nav-logo">
+<span data-text="clinicName" style="display:inline;color:inherit;font-size:inherit;letter-spacing:inherit;font-family:inherit;font-weight:inherit;margin:0;">福岡歯科 祐天寺院</span>
+<span>歯科筋筋膜セラピー導入医院</span>
+</div>
+<a class="nav-cta" data-href="ctaMainUrl" data-text="navCtaLabel" href="#closing">ご予約・ご相談</a>
+</nav>
+<!-- HERO -->
+<section id="hero">
+<div class="hero-bg-line"></div>
+<div class="hero-ornament"></div>
+<div class="hero-content">
+<div class="hero-eyebrow">Dental Myofascial Therapy</div>
+<h1 class="hero-title" style="
+      font-size:clamp(2.2rem,8vw,4.8rem);
+      line-height:1.45;
+      letter-spacing:0.03em;
+      word-break:keep-all;
+    ">
+<span style="display:block;">“歯だけ”では届かない不調へ。</span>
+<span style="display:block;color:#c9a64b;font-weight:500;margin-top:10px;text-shadow:0 2px 12px rgba(0,0,0,0.18);">新しいアプローチを。</span>
+</h1>
+<p class="hero-subtitle-ja">筋肉・筋膜・姿勢・呼吸から考える<br/>歯科筋筋膜セラピー</p>
+<p class="hero-desc" data-html="heroDescription">
+      福岡歯科 祐天寺院では、歯科筋筋膜セラピー（シカキンセラピー）を通じて、<br/>
+      口腔内だけでなく、筋肉・筋膜・姿勢・呼吸まで<br/>
+      含めたトータルサポートを目指します。
+    </p>
+<div class="hero-buttons">
+<a class="btn-primary" data-href="ctaMainUrl" data-text="heroPrimaryCta" href="#closing">初回相談はこちら</a>
+<a class="btn-secondary" href="#therapy">シカキンセラピーとは</a>
+</div>
+</div>
+</section>
+<!-- CONCERNS -->
+<section id="concerns">
+<div class="reveal">
+<div class="section-eyebrow">Your Concerns</div>
+<h2 class="section-title">こんなお悩みは<br/>ありませんか？</h2>
+<div class="gold-divider"></div>
+<p class="section-body" data-html="concernsLead" style="color:rgba(253,250,244,0.68);">
+      顎の違和感、くいしばり、原因が分からない歯の痛み。<br/>
+      シカキンセラピーでは、歯だけではなく、筋肉・筋膜・姿勢・呼吸とのつながりまで含めて考えます。
+    </p>
+</div>
+<div class="image-grid reveal">
+<div class="image-card">
+<img alt="顎の違和感イメージ" data-src="symptomJawImage" src="assets/shared-dde7c592b9f86fe3.jpg"/>
+<div class="image-caption" style="color:rgba(253,250,244,0.72);">顎の違和感・原因不明の不調</div>
+</div>
+<div class="image-card">
+<img alt="首・肩周囲の緊張イメージ" data-src="symptomNeckImage" src="assets/shared-f40138c0a8b1c3cf.jpg"/>
+<div class="image-caption" style="color:rgba(253,250,244,0.72);">肩こり・首周囲の緊張感</div>
+</div>
+</div>
+<div class="concerns-grid reveal" data-list="concerns">
+<div class="concern-item"><div class="concern-check">✓</div><div class="concern-text">顎が痛い・だるい、朝起きると顎が疲れている</div></div>
+<div class="concern-item"><div class="concern-check">✓</div><div class="concern-text">歯ぎしり・くいしばりが気になる</div></div>
+</div>
+<div class="concerns-note reveal">
+    これらの症状には、<strong style="color:var(--gold-light);">筋肉・筋膜の緊張</strong>や<strong style="color:var(--gold-light);">姿勢・呼吸</strong>が関係しているケースがあります。
+  </div>
+</section>
+<!-- WHY -->
+<section id="why">
+<div class="why-layout">
+<div class="reveal">
+<div class="section-eyebrow">Why Shikaking</div>
+<h2 class="section-title">痛い場所に、<br/><em>原因があるとは</em><br/>限りません。</h2>
+<div class="gold-divider"></div>
+<p class="section-body">
+        顎の痛みや違和感は、必ずしも「歯」や「顎関節」だけが原因とは限りません。<br/><br/>
+        近年の口腔顔面痛の分野では、筋肉・筋膜由来の痛みが関与するケースが多いことが注目されています。<br/><br/>
+        姿勢・呼吸・食いしばり習慣・ストレス・首や肩の筋緊張などが複合的に影響することもあります。<br/><br/>
+        だからこそ当院では、<strong>"歯だけを見る"のではなく、身体全体とのつながり</strong>を考えたサポートを大切にしています。
+      </p>
+</div>
+<div class="why-visual reveal">
+<div class="why-venn">
+<svg font-family="'Shippori Mincho', serif" viewbox="0 0 520 570" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<radialgradient cx="50%" cy="40%" id="goldGrad" r="60%">
+<stop offset="0%" stop-color="#E8D5A3"></stop>
+<stop offset="100%" stop-color="#C9A84C"></stop>
+</radialgradient>
+</defs>
+<!-- 上：顎・歯 -->
+<circle cx="260" cy="160" fill="rgba(201,168,76,0.06)" r="130" stroke="rgba(201,168,76,0.25)" stroke-width="1"></circle>
+<!-- 左下：筋肉・筋膜 -->
+<circle cx="155" cy="335" fill="rgba(201,168,76,0.05)" r="130" stroke="rgba(201,168,76,0.2)" stroke-width="1"></circle>
+<!-- 右下：美容・全身 -->
+<circle cx="365" cy="335" fill="rgba(201,168,76,0.05)" r="130" stroke="rgba(201,168,76,0.2)" stroke-width="1"></circle>
+<!-- 中央ゴールド円 -->
+<circle cx="260" cy="273" fill="url(#goldGrad)" opacity="0.92" r="80"></circle>
+<circle cx="260" cy="273" fill="none" r="80" stroke="rgba(255,255,255,0.25)" stroke-width="1"></circle>
+<!-- ラベル：顎・歯（上円の中央） -->
+<text dominant-baseline="middle" fill="#8B6914" font-size="18" letter-spacing="2" text-anchor="middle" x="260" y="108">顎・歯</text>
+<text dominant-baseline="middle" fill="#8A8278" font-family="'Cormorant Garamond', serif" font-size="12" letter-spacing="4" text-anchor="middle" x="260" y="133">Dental</text>
+<!-- ラベル：筋肉・筋膜（左下円の中央） -->
+<text dominant-baseline="middle" fill="#8B6914" font-size="17" letter-spacing="1" text-anchor="middle" x="118" y="320">筋肉・筋膜</text>
+<text dominant-baseline="middle" fill="#8B6914" font-size="17" letter-spacing="1" text-anchor="middle" x="118" y="343">姿勢・呼吸</text>
+<text dominant-baseline="middle" fill="#8A8278" font-family="'Cormorant Garamond', serif" font-size="11" letter-spacing="3" text-anchor="middle" x="118" y="368">Myofascial</text>
+<!-- ラベル：美容・全身（右下円の中央） -->
+<text dominant-baseline="middle" fill="#8B6914" font-size="17" letter-spacing="1" text-anchor="middle" x="402" y="320">美容・全身</text>
+<text dominant-baseline="middle" fill="#8B6914" font-size="17" letter-spacing="1" text-anchor="middle" x="402" y="343">セルフケア</text>
+<text dominant-baseline="middle" fill="#8A8278" font-family="'Cormorant Garamond', serif" font-size="11" letter-spacing="3" text-anchor="middle" x="402" y="368">Beauty</text>
+<!-- 中央テキスト -->
+<text dominant-baseline="middle" fill="white" font-size="16" letter-spacing="3" text-anchor="middle" x="260" y="263">シカキン</text>
+<text dominant-baseline="middle" fill="white" font-size="16" letter-spacing="3" text-anchor="middle" x="260" y="288">セラピー</text>
+</svg>
+</div>
+</div>
+</div>
+</section>
+<!-- CLINIC SCENE -->
+<section id="clinic-scene">
+<div class="reveal" style="text-align:center; max-width:680px; margin:0 auto;">
+<div class="section-eyebrow">Dental Clinic Care</div>
+<h2 class="section-title">歯科医院で行うからこそ、<br/><em>安心して相談できる</em>。</h2>
+<div class="gold-divider" style="margin:20px auto 0;"></div>
+</div>
+<div class="scene-layout">
+<div class="photo-frame reveal">
+<img alt="歯科医院でのカウンセリング風景" data-src="consultationImage" src="assets/shared-71722ab2502ff2cb.jpg"/>
+</div>
+<div class="scene-copy-box reveal reveal-delay-1">
+<div class="scene-label">Consultation</div>
+<div class="scene-title">歯・顎・噛み合わせだけでなく、<br/>筋肉・姿勢・呼吸まで確認します。</div>
+<p class="section-body">
+        シカキンセラピーは、歯科医院で行う筋肉・筋膜アプローチです。
+        顎関節やくいしばり、口腔機能の状態を確認しながら、患者さん一人ひとりに合わせたセルフケア指導につなげます。
+      </p>
+</div>
+</div>
+</section>
+<!-- THERAPY -->
+<section id="therapy">
+<div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+<div class="section-eyebrow">Our Approach</div>
+<h2 class="section-title">シカキンセラピーで<br/><em>行うこと</em></h2>
+<div class="gold-divider" style="margin:20px auto 40px;"></div>
+<p class="section-body" style="margin:0 auto;">
+      施術を受け続けることを目的にするのではなく、<br/>
+      患者さん自身がセルフケアを身につけ、<br/>
+      健康と美容を自分で維持できることを目指します。
+    </p>
+</div>
+<div class="therapy-steps">
+<div class="therapy-step reveal reveal-delay-1">
+<div class="step-number">
+<span class="step-num-text">01</span>
+<span class="step-num-label">STEP</span>
+</div>
+<div class="step-title">カウンセリング</div>
+<div class="step-body">生活習慣・食いしばり・姿勢・美容のご希望などを丁寧に確認します。</div>
+</div>
+<div class="therapy-step reveal reveal-delay-2">
+<div class="step-number">
+<span class="step-num-text">02</span>
+<span class="step-num-label">STEP</span>
+</div>
+<div class="step-title">評価</div>
+<div class="step-body">筋肉・筋膜・姿勢・呼吸などを確認し、お身体の状態を把握します。</div>
+</div>
+<div class="therapy-step reveal reveal-delay-3">
+<div class="step-number">
+<span class="step-num-text">03</span>
+<span class="step-num-label">STEP</span>
+</div>
+<div class="step-title">筋膜ケア</div>
+<div class="step-body">顎・首肩周囲の筋肉へアプローチ。美容効果も意識したケアを行います。</div>
+</div>
+<div class="therapy-step reveal reveal-delay-4">
+<div class="step-number">
+<span class="step-num-text">04</span>
+<span class="step-num-label">STEP</span>
+</div>
+<div class="step-title">セルフケア指導</div>
+<div class="step-body">ご自宅で続けられる簡単なケアをお伝えし、毎日の変化をサポートします。</div>
+</div>
+</div>
+</section>
+<!-- CARE SCENE -->
+<section id="care-scene" style="background:var(--ivory-deep);">
+<div class="reveal" style="text-align:center; max-width:680px; margin:0 auto;">
+<div class="section-eyebrow">Therapy Scene</div>
+<h2 class="section-title">顎・首まわりの緊張を、<br/><em>やさしく確認しながら整える</em>。</h2>
+<div class="gold-divider" style="margin:20px auto 0;"></div>
+</div>
+<div class="care-gallery">
+<div class="image-card reveal">
+<img alt="顔まわりのケア風景" data-src="therapyFaceImage" src="assets/shared-82cf11e8fa82dd81.jpg"/>
+<div class="image-caption">顎・顔まわりの筋肉の緊張を確認しながら、やさしくケアします。</div>
+</div>
+<div class="image-card reveal reveal-delay-1">
+<img alt="首まわりのケア風景" data-src="therapyNeckImage" src="assets/shared-af0653e052450878.jpg"/>
+<div class="image-caption">首・肩周囲の状態も確認し、姿勢や呼吸とのつながりを見ていきます。</div>
+</div>
+</div>
+</section>
+<!-- SYMPTOMS -->
+<section id="symptoms">
+<div class="reveal">
+<div class="section-eyebrow">Supported Symptoms</div>
+<h2 class="section-title">対応している<br/><em>お悩み・症状</em></h2>
+<div class="gold-divider"></div>
+</div>
+<div class="symptoms-layout">
+<div class="symptom-group reveal">
+<div class="symptom-group-title">DENTAL / FACIAL PAIN</div>
+<ul class="symptom-list" data-list="dentalSymptoms">
+<li>顎関節症・開口障害</li>
+<li>顎の違和感・痛み</li>
+<li>歯ぎしり・くいしばり</li>
+</ul>
+</div>
+<div class="symptom-group reveal reveal-delay-1">
+<div class="symptom-group-title">BEAUTY / BODY WELLNESS</div>
+<ul class="symptom-list" data-list="beautySymptoms">
+<li>小顔・フェイスライン改善</li>
+<li>顔のたるみ・むくみ</li>
+<li>姿勢不良・猫背</li>
+</ul>
+</div>
+</div>
+<p class="symptom-note reveal">
+    ※ 症状や状態によっては医科連携をご提案する場合があります。<br/>
+    ※ 美容効果には個人差があります。症状の改善を保証するものではありません。
+  </p>
+</section>
+<!-- DIFFERENCE -->
+<section id="difference">
+<div class="reveal" style="text-align:center; max-width:600px; margin:0 auto 60px;">
+<div class="section-eyebrow">Our Difference</div>
+<h2 class="section-title">当院が<br/><em>大切にしていること</em></h2>
+<div class="gold-divider" style="margin:20px auto 0;"></div>
+<p class="section-body" style="margin:0 auto; text-align:left;">
+      一般的な歯科治療では、<br/>
+      「歯」や「噛み合わせ」を中心に診ていきます。<br/><br/>
+      シカキンセラピーでは、<br/>
+      そこに加えて、筋肉・筋膜・姿勢・呼吸など、<br/>
+      全身とのつながりまで含めて考えます。<br/><br/>
+      どちらか一方ではなく、<br/>
+      それぞれの視点を大切にしながら、<br/>
+      患者さまのお悩みに向き合っています。
+    </p>
+</div>
+<div class="diff-layout">
+<div class="diff-card diff-card-general reveal">
+<span class="diff-card-label">GENERAL DENTAL</span>
+<div class="diff-card-title">一般的な歯科治療</div>
+<ul class="diff-list">
+<li><span class="icon">—</span>「歯」「噛み合わせ」を中心に診る</li>
+<li><span class="icon">—</span>症状部位への局所的なアプローチ</li>
+<li><span class="icon">—</span>マウスピースや処置が中心</li>
+<li><span class="icon">—</span>通院が続くことが前提になりやすい</li>
+</ul>
+</div>
+<div class="diff-card diff-card-shikaking reveal reveal-delay-1">
+<span class="diff-card-label">SHIKAKING THERAPY</span>
+<div class="diff-card-title" style="color:var(--ivory);">シカキンセラピー</div>
+<ul class="diff-list">
+<li><span class="icon" style="color:var(--gold);">◆</span>筋肉・筋膜・姿勢・呼吸・美容まで考える</li>
+<li><span class="icon" style="color:var(--gold);">◆</span>身体全体のつながりを重視したアプローチ</li>
+<li><span class="icon" style="color:var(--gold);">◆</span>セルフケア指導で日常から改善を目指す</li>
+<li><span class="icon" style="color:var(--gold);">◆</span>患者さん自身が自分で整えられるようにする</li>
+</ul>
+<div style="margin-top:32px; padding-top:24px; border-top:1px solid rgba(201,168,76,0.2); font-size:0.72rem; color:var(--gold-light); letter-spacing:0.1em; line-height:2;">
+        "歯科医院を、地域の健康・美容プラットフォームへ。"
+      </div>
+</div>
+</div>
+</section>
+<!-- BEAUTY -->
+<section id="beauty">
+<div class="reveal">
+<div class="section-eyebrow">Beauty &amp; Wellness</div>
+<h2 class="section-title">歯科から始まる、<br/><em>美しさの循環</em>。</h2>
+<div class="gold-divider"></div>
+<p class="section-body">
+      「美しさ」は表面だけで作られるものではありません。<br/>
+      筋肉・筋膜・姿勢・呼吸が整うことで、<br/>
+      顔貌から全身の印象まで、内側から変わっていきます。
+    </p>
+</div>
+<div class="beauty-layout" style="margin-top:60px;">
+<div class="beauty-cards">
+<div class="beauty-card reveal reveal-delay-1">
+<div class="beauty-card-number">01</div>
+<div class="beauty-card-title">小顔・リフトアップ効果</div>
+<div class="beauty-card-body">
+          咬筋（かみしめる筋肉）の過緊張は、顔が大きく見える原因のひとつです。<br/>
+          筋筋膜へのアプローチにより、顔周りの筋肉の緊張をほぐし、<br/>
+          すっきりとしたフェイスラインへと導きます。
+        </div>
+</div>
+<div class="beauty-card reveal reveal-delay-2">
+<div class="beauty-card-number">02</div>
+<div class="beauty-card-title">むくみ・血流改善</div>
+<div class="beauty-card-body">
+          顎や首周辺の筋肉の緊張が緩和されることで、<br/>
+          リンパや血液の流れが改善されやすくなります。<br/>
+          顔のむくみや肌のくすみ改善にもアプローチします。
+        </div>
+</div>
+<div class="beauty-card reveal reveal-delay-3">
+<div class="beauty-card-number">03</div>
+<div class="beauty-card-title">姿勢改善による見た目変化</div>
+<div class="beauty-card-body">
+          姿勢が改善されると、首が長く見え、全身のシルエットが美しく変化します。<br/>
+          猫背・前傾姿勢の改善は、老け見えの予防にもつながります。
+        </div>
+</div>
+<div class="beauty-card reveal reveal-delay-4">
+<div class="beauty-card-number">04</div>
+<div class="beauty-card-title">呼吸・口呼吸の改善</div>
+<div class="beauty-card-body">
+          口呼吸は、顔のたるみや乾燥、口臭の一因とも言われています。<br/>
+          鼻呼吸習慣の定着をサポートすることで、<br/>
+          内側からの美しさを育むケアを行います。
+        </div>
+</div>
+</div>
+<div class="beauty-right reveal">
+<div class="photo-frame" style="margin-bottom:24px;">
+<img alt="美容・フェイスラインのイメージ" data-src="beautyImage" src="assets/shared-b66f21508165889f.jpg"/>
+</div>
+<div class="beauty-quote">
+<div class="beauty-quote-text">
+          歯科から生まれる美しさは、<br/>
+          表面を変えるのではなく、<br/>
+<strong style="color:var(--gold-dark);">身体の使い方そのものを整えること</strong>。<br/><br/>
+          それが、シカキンセラピーが目指す<br/>
+          本質的なアプローチです。
+        </div>
+</div>
+<div style="padding: 32px 36px; background: rgba(201,168,76,0.06); border: 1px solid rgba(201,168,76,0.2);">
+<div style="font-size:0.65rem; letter-spacing:0.3em; color:var(--gold); margin-bottom:16px;">BEAUTY POINT</div>
+<ul style="list-style:none; display:flex; flex-direction:column; gap:12px;">
+<li style="font-size:0.8rem; color:var(--warm-gray); letter-spacing:0.05em; line-height:1.8; display:flex; gap:10px; align-items:flex-start;">
+<span style="color:var(--gold); margin-top:2px;">◆</span>咬筋ケアによるフェイスラインの変化
+          </li>
+<li style="font-size:0.8rem; color:var(--warm-gray); letter-spacing:0.05em; line-height:1.8; display:flex; gap:10px; align-items:flex-start;">
+<span style="color:var(--gold); margin-top:2px;">◆</span>首・肩ほぐしによる血流・リンパ促進
+          </li>
+<li style="font-size:0.8rem; color:var(--warm-gray); letter-spacing:0.05em; line-height:1.8; display:flex; gap:10px; align-items:flex-start;">
+<span style="color:var(--gold); margin-top:2px;">◆</span>呼吸改善による口元・肌への好影響
+          </li>
+<li style="font-size:0.8rem; color:var(--warm-gray); letter-spacing:0.05em; line-height:1.8; display:flex; gap:10px; align-items:flex-start;">
+<span style="color:var(--gold); margin-top:2px;">◆</span>姿勢改善による全身シルエット変化
+          </li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<!-- DOCTOR PROFILES -->
+<section id="doctor-profiles" class="staff-section">
+  <div class="reveal">
+    <div class="section-eyebrow">Management Doctors</div>
+    <h2 class="section-title">シカキンを支える<br/>歯科医師</h2>
+    <div class="gold-divider"></div>
+    <p class="section-body staff-lead">歯科医師 / シカキンマネジメントドクターが、診断・管理・導入体制を支えます。</p>
+  </div>
+  <div class="staff-grid staff-grid-mobile-safe" id="doctorStaffGrid">
+    <article class="staff-card">
+      <div class="staff-photo"><img src="assets/doctor-01.jpg" alt="福岡博史"></div>
+      <div class="staff-info"><div class="staff-role">院長<br>歯科医師 / シカキンマネジメントドクター</div><div class="staff-name">福岡博史</div></div>
+    </article>
+  </div>
+    </article>
+  </div>
+</section>
+<!-- THERAPIST PROFILES -->
+<section id="therapist-profiles" class="staff-section">
+  <div class="reveal">
+    <div class="section-eyebrow">Shikakin Therapists</div>
+    <h2 class="section-title">セルフケア指導を支える<br/>シカキンセラピスト</h2>
+    <div class="gold-divider"></div>
+    <p class="section-body staff-lead">歯科医師の管理のもと、筋筋膜ケアとセルフケア指導をサポートします。</p>
+  </div>
+  <div class="staff-grid staff-grid-mobile-safe" id="therapistStaffGrid">
+    <article class="staff-card">
+      <div class="staff-photo"><img src="assets/therapist-01.jpg" alt="大日向沙織"></div>
+      <div class="staff-info"><div class="staff-role">シカキンセラピスト<br>歯科助手 / シカキンセラピスト</div><div class="staff-name">大日向沙織</div></div>
+    </article>
+  </div>
+    </article>
+  </div>
+</section>
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+<div class="reveal" style="text-align:center; max-width:600px; margin:0 auto;">
+<div class="section-eyebrow">Expert Voices</div>
+<h2 class="section-title">専門家からの<br/><em>推薦メッセージ</em></h2>
+<div class="gold-divider" style="margin:20px auto 0;"></div>
+</div>
+<div class="testimonial-grid">
+<div class="testimonial-card reveal reveal-delay-1">
+<div class="testimonial-photo"><img alt="臼田 頌" src="assets/shared-ce26234febe146ea.jpg"/></div>
+<div class="quote-mark">"</div>
+<div class="testimonial-name">臼田 頌 先生</div>
+<div class="testimonial-title">慶應義塾大学医学部 歯科・口腔外科学教室／歯科医師</div>
+<p class="testimonial-text">
+        福岡歯科 祐天寺院のアプローチは、口腔顔面痛の最前線にある考え方と一致しています。筋肉・筋膜・姿勢・呼吸まで視野に入れた診療は、患者さんに本質的なケアを提供できる医院として、自信を持っておすすめできます。
+      </p>
+</div>
+<div class="testimonial-card reveal reveal-delay-2">
+<div class="testimonial-photo"><img alt="福岡 博史" src="assets/shared-5b81aa07eb557b21.jpg"/></div>
+<div class="quote-mark">"</div>
+<div class="testimonial-name">福岡 博史 先生</div>
+<div class="testimonial-title">歯科統合医療 practitioner／歯科医師</div>
+<p class="testimonial-text">
+        福岡歯科 祐天寺院は、歯科と全身医療をつなぐ視点を持ち、これからの時代に求められる歯科のあり方を体現しています。セルフケア指導まで含めた包括的なサポートは、患者さんの生活の質を根本から変える可能性を持っており、心からおすすめします。
+      </p>
+</div>
+<div class="testimonial-card reveal reveal-delay-3">
+<div class="testimonial-photo"><img alt="田口 直人" src="assets/shared-c2ff3073fe3e2d6f.jpg"/></div>
+<div class="quote-mark">"</div>
+<div class="testimonial-name">田口 直人 先生</div>
+<div class="testimonial-title">歯科筋筋膜セラピー協会 代表理事／治療家（国家資格）</div>
+<p class="testimonial-text" data-html="taguchiRecommendation">
+        福岡歯科 祐天寺院はシカキンセラピーの理念を正しく体現し、患者さんに真摯に向き合う医院として、協会代表として推薦します。歯科医院でありながら身体全体を診る視点を持ち、セルフケアの定着まで寄り添う姿勢は、多くの方の健康に貢献できると確信しています。
+      </p>
+</div>
+</div>
+
+<div class="faq-list reveal">
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+        痛い施術ですか？
+        <div class="faq-icon">+</div>
+</div>
+<div class="faq-answer">状態に合わせて無理のない範囲で行います。施術中に不快感がある場合はすぐにお申し付けください。</div>
+</div>
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+        保険診療ですか？
+        <div class="faq-icon">+</div>
+</div>
+<div class="faq-answer">内容によって異なります。保険適用・自由診療の両方があるため、詳しくは初回カウンセリングにてご案内します。</div>
+</div>
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+        美容効果はすぐ出ますか？
+        <div class="faq-icon">+</div>
+</div>
+<div class="faq-answer">個人差があります。施術直後から顔周りのすっきり感を感じる方もいますが、継続的なセルフケアとの組み合わせが大切です。効果の現れ方についてはカウンセリングで丁寧にご説明します。</div>
+</div>
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+        どんな方が受けていますか？
+        <div class="faq-icon">+</div>
+</div>
+<div class="faq-answer">顎関節症、食いしばり、首肩こり、姿勢のお悩みの方から、小顔・フェイスラインを気にされている方、美容・アンチエイジング目的の方まで幅広くお越しいただいています。</div>
+</div>
+<div class="faq-item">
+<div class="faq-question" onclick="toggleFaq(this)">
+        セルフケアは難しいですか？
+        <div class="faq-icon">+</div>
+</div>
+<div class="faq-answer">ご自宅で続けやすい内容を中心にお伝えしています。動画でのご案内など、無理なく継続できるようサポートします。</div>
+</div>
+</div>
+</section>
+<section id="clinic-info">
+<div class="reveal">
+<div class="section-eyebrow">Clinic Information</div>
+<h2 class="section-title">医院情報</h2>
+<div class="gold-divider"></div>
+<p class="section-body" data-html="clinicInfoHtml">
+      福岡歯科 祐天寺院<br/>
+      〒000-0000<br/>
+      〇〇県〇〇市〇〇町0-0-0<br/>
+      TEL：000-0000-0000<br/>
+<br/>
+</p>
+</div>
+</section>
+<!-- CLOSING -->
+<section id="closing">
+<div class="closing-ornament"></div>
+<div class="closing-content reveal">
+<div class="section-eyebrow" style="justify-content:center; display:flex; align-items:center; gap:16px; margin-bottom:28px;">
+<span style="display:block; width:40px; height:1px; background:var(--gold);"></span>
+      Contact
+      <span style="display:block; width:40px; height:1px; background:var(--gold);"></span>
+</div>
+<h2 class="closing-title">
+<em>歯</em>だけでなく、<br/>
+      あなたの毎日まで<br/>
+      変わるサポートを。
+    </h2>
+<p class="closing-body">
+      症状だけを見るのではなく、<br/>
+      その背景にある「身体の使い方」と「美しさの土台」まで一緒に考える。<br/><br/>
+      それが、当院のシカキンセラピーです。<br/>
+      まずはお気軽にご相談ください。
+    </p>
+<div class="closing-buttons">
+<a class="btn-primary" data-href="reservationUrl" data-text="reservationCtaLabel" href="#">WEB予約はこちら</a>
+<a class="btn-secondary" data-href="lineUrl" data-text="lineCtaLabel" href="#">LINEで相談する</a>
+</div>
+</div>
+</section>
+<!-- FOOTER -->
+<footer>
+<div class="footer-logo" data-text="clinicName">福岡歯科 祐天寺院</div>
+<div class="footer-copy" data-html="footerCopy">© 2026 福岡歯科 祐天寺院. All rights reserved.</div>
+</footer>
+<script>
+  /* =========================================================
+     シカキンLP 量産用設定
+     医院ごとの変更は、基本的にここだけ編集してください。
+     ========================================================= */
+  const SHIKAKIN_LP_CONFIG = {
+    sourceWebsiteUrl: "https://418.co.jp/yutenji/",
+    clinicName: "福岡歯科 祐天寺院",
+    directorName: "福岡博史",
+    therapistName: "大日向沙織",
+    // 複数名対応：ここに掲載者を増やします。不要な行は削除してください。
+    doctors: [
+      {
+        position: "院長",
+        role: "歯科医師 / シカキンマネジメントドクター",
+        name: "福岡博史",
+        imageKey: "directorImage"
+      }
+    ],
+    therapists: [
+      {
+        position: "シカキンセラピスト",
+        role: "歯科助手 / シカキンセラピスト",
+        name: "大日向沙織",
+        imageKey: "therapistImage"
+      }
+    ],
+    directorRole: "歯科医師 / シカキンマネジメントドクター",
+    therapistRole: "歯科助手 / シカキンセラピスト",
+    postalCode: "〒153-0052",
+    address: "東京都目黒区祐天寺1-27-10",
+    tel: "03-3792-4618",
+    access: "東急東横線「祐天寺駅」徒歩5分",
+    reservationUrl: "https://418.co.jp/yutenji/consultation/index.shtml",
+    lineUrl: "",
+    ctaMainUrl: "#closing",
+    navCtaLabel: "ご予約・ご相談",
+    heroPrimaryCta: "初回相談はこちら",
+    reservationCtaLabel: "WEB予約はこちら",
+    lineCtaLabel: "LINEで相談する",
+    images: {
+      directorImage: "assets/doctor-01.jpg",
+      therapistImage: "assets/therapist-01.jpg",
+      symptomJawImage: "assets/shared-dde7c592b9f86fe3.jpg",
+      symptomNeckImage: "assets/shared-f40138c0a8b1c3cf.jpg",
+      beautyImage: "assets/shared-b66f21508165889f.jpg",
+      consultationImage: "assets/shared-71722ab2502ff2cb.jpg",
+      therapyFaceImage: "assets/shared-82cf11e8fa82dd81.jpg",
+      therapyNeckImage: "assets/shared-af0653e052450878.jpg"
+    },
+    concerns: [
+      "顎が痛い・だるい、朝起きると顎が疲れている",
+      "歯ぎしり・くいしばりが気になる",
+      "歯に異常がないと言われたのに痛い",
+      "マウスピースだけでは改善しない",
+      "肩こり・首こり・頭痛もある",
+      "姿勢が悪いと言われる・呼吸が浅い",
+      "口呼吸が気になる・口が開きにくい",
+      "フェイスラインや顔のこわばりが気になる"
+    ],
+    dentalSymptoms: [
+      "顎関節症・開口障害",
+      "顎の違和感・痛み",
+      "歯ぎしり・くいしばり",
+      "非歯原性歯痛・知覚過敏",
+      "頭痛・首こり・肩こり",
+      "矯正後の後戻り対策",
+      "口腔機能低下への予防的アプローチ"
+    ],
+    beautySymptoms: [
+      "小顔・フェイスライン改善",
+      "顔のたるみ・むくみ",
+      "口呼吸の改善・鼻呼吸の定着",
+      "姿勢不良・猫背",
+      "低位舌・口元のたるみ",
+      "睡眠のお悩み",
+      "全身の緊張感・疲労感"
+    ],
+    hideTemplateNotes: true
+  };
+
+  function br(text) {
+    return String(text || "").replace(/\n/g, "<br>");
+  }
+
+  function buildLpData(config) {
+    const clinicName = config.clinicName || "福岡歯科 祐天寺院";
+    return {
+      ...config,
+      directorRole: config.directorRole || "歯科医師 / シカキンマネジメントドクター",
+      heroDescription: `${clinicName}では、歯科筋筋膜セラピー（シカキンセラピー）を通じて、<br>口腔内だけでなく、筋肉・筋膜・姿勢・呼吸まで<br>含めたトータルサポートを目指します。`,
+      concernsLead: `顎の違和感、くいしばり、原因が分からない歯の痛み。<br>シカキンセラピーでは、歯だけではなく、筋肉・筋膜・姿勢・呼吸とのつながりまで含めて考えます。`,
+      taguchiRecommendation: `${clinicName}はシカキンセラピーの理念を正しく体現し、患者さんに真摯に向き合う医院として、協会代表として推薦します。歯科医院でありながら身体全体を診る視点を持ち、セルフケアの定着まで寄り添う姿勢は、多くの方の健康に貢献できると確信しています。`,
+      clinicInfoHtml: `${clinicName}<br>${config.postalCode || ""}<br>${config.address || ""}<br>TEL：${config.tel || ""}<br>${config.access ? "アクセス：" + config.access + "<br>" : ""}<br><strong>診療時間</strong><br>月・水・金 9:30〜13:00 / 14:00〜18:00<br>火・木 9:30〜13:00 / 14:00〜19:00<br>土 9:30〜13:00 / 14:00〜17:00<br>休診：日曜・祝祭日・第4土曜日<br><br><a href="https://www.google.com/maps/search/?api=1&query=%E7%A6%8F%E5%B2%A1%E6%AD%AF%E7%A7%91+%E7%A5%90%E5%A4%A9%E5%AF%BA%E9%99%A2" target="_blank" rel="noopener">Googleマップを開く</a>`,
+      footerCopy: `© 2026 ${clinicName}. All rights reserved.`,
+      ctaMainUrl: config.ctaMainUrl && config.ctaMainUrl !== "#closing" ? config.ctaMainUrl : (config.lineUrl || config.reservationUrl || "#closing")
+    };
+  }
+
+
+
+  function escapeHtml(value) {
+    return String(value || "").replace(/[&<>"']/g, ch => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#39;"
+    }[ch]));
+  }
+
+  function resolveStaffImage(item, data, fallbackKey) {
+    if (item.image) return item.image;
+    if (item.imageKey && data.images && data.images[item.imageKey]) return data.images[item.imageKey];
+    if (fallbackKey && data.images && data.images[fallbackKey]) return data.images[fallbackKey];
+    return "";
+  }
+
+  function normalizeDoctors(data) {
+    if (Array.isArray(data.doctors) && data.doctors.length) return data.doctors;
+    return [{
+      position: "院長",
+      role: data.directorRole || "歯科医師 / シカキンマネジメントドクター",
+      name: data.directorName || "〇〇 〇〇",
+      imageKey: "directorImage"
+    }];
+  }
+
+  function normalizeTherapists(data) {
+    if (Array.isArray(data.therapists) && data.therapists.length) return data.therapists;
+    return [{
+      position: "シカキンセラピスト",
+      role: data.therapistRole || "シカキンセラピー認定セラピスト",
+      name: data.therapistName || "〇〇 〇〇",
+      imageKey: "therapistImage"
+    }];
+  }
+
+  function renderStaffGrid(containerId, items, data, fallbackImageKey) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    container.innerHTML = items.map(item => {
+      const img = resolveStaffImage(item, data, fallbackImageKey);
+      const alt = escapeHtml(item.alt || item.name || "スタッフ写真");
+      const photo = img
+        ? `<img src="${img}" alt="${alt}">`
+        : `<div class="staff-photo-placeholder">PHOTO</div>`;
+      const note = item.note ? `<div class="staff-note">${escapeHtml(item.note)}</div>` : "";
+      return `
+        <article class="staff-card">
+          <div class="staff-photo">${photo}</div>
+          <div class="staff-meta">
+            <div class="staff-position">${escapeHtml(item.position || "")} ${item.position && item.role ? "<br>" : ""}${escapeHtml(item.role || "")}</div>
+            <div class="staff-name">${escapeHtml(item.name || "〇〇 〇〇")}</div>
+            ${note}
+          </div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function applyShikakinConfig() {
+    const data = buildLpData(SHIKAKIN_LP_CONFIG);
+    document.title = `${data.clinicName} | シカキンセラピー`;
+
+    document.querySelectorAll("[data-text]").forEach(el => {
+      const key = el.getAttribute("data-text");
+      if (data[key] !== undefined) el.textContent = data[key];
+    });
+
+    document.querySelectorAll("[data-html]").forEach(el => {
+      const key = el.getAttribute("data-html");
+      if (data[key] !== undefined) el.innerHTML = data[key];
+    });
+
+    document.querySelectorAll("[data-href]").forEach(el => {
+      const key = el.getAttribute("data-href");
+      if (data[key]) el.setAttribute("href", data[key]);
+    });
+
+    document.querySelectorAll("[data-src]").forEach(el => {
+      const key = el.getAttribute("data-src");
+      const src = data.images && data.images[key];
+      if (src) el.setAttribute("src", src);
+    });
+
+    document.querySelectorAll("[data-list]").forEach(list => {
+      const key = list.getAttribute("data-list");
+      const items = data[key] || [];
+      if (!items.length) return;
+      if (key === "concerns") {
+        list.innerHTML = items.map(item => `<div class="concern-item"><div class="concern-check">✓</div><div class="concern-text">${item}</div></div>`).join("");
+      } else {
+        list.innerHTML = items.map(item => `<li>${item}</li>`).join("");
+      }
+    });
+
+
+
+    // Staff cards are rendered as static HTML for mobile-safe display.
+    // Do not re-render with JavaScript; this prevents mobile/local Safari from wiping staff cards.
+    // renderStaffGrid("doctorStaffGrid", normalizeDoctors(data), data, "directorImage");
+    // renderStaffGrid("therapistStaffGrid", normalizeTherapists(data), data, "therapistImage");
+
+    if (data.hideTemplateNotes) {
+      document.querySelectorAll(".template-note").forEach(el => el.classList.add("is-hidden"));
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", applyShikakinConfig);
+</script>
+<script>
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  reveals.forEach(r => observer.observe(r));
+</script>
+</body>
+</html>
