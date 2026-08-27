@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-MASTER = ROOT / "fukuoka-tdc" / "index.html"
+MASTER = ROOT / "master" / "index.html"
 
 
 def js_string(value):
@@ -93,7 +93,7 @@ def main():
     slug = re.sub(r"[^a-z0-9-]", "-", (payload.get("slug") or "").lower()).strip('-')
     if not slug:
         raise SystemExit("slug is required")
-    if slug in {"fukuoka-tdc", "yutenji", "sangu-dental99", "utoh", "automation", ".github"}:
+    if slug in {"master", "fukuoka-tdc", "yutenji", "sangu-dental99", "utoh", "automation", ".github"}:
         raise SystemExit(f"protected slug: {slug}")
 
     text = MASTER.read_text(encoding="utf-8")
