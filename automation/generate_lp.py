@@ -75,11 +75,13 @@ def normalize_staff(items, role_default):
     for item in items or []:
         if not item or not item.get("name"):
             continue
+        photo = item.get("photo", "") or item.get("image", "")
         obj = {
             "name": item.get("name", ""),
             "role": item.get("role", role_default),
             "title": item.get("title", ""),
-            "photo": item.get("photo", ""),
+            "image": photo,
+            "photo": photo,
         }
         out.append(obj)
     return out
@@ -120,10 +122,8 @@ def main():
         text = replace_object(text, "images", payload["images"])
 
     if payload.get("clinicIntro"):
-        # Optional placeholders can be added to MASTER later. Safe no-op for current MASTER.
         text = text.replace("{{CLINIC_INTRO}}", payload["clinicIntro"])
 
-    # Make title unique even if the template title is not fully data-driven.
     text = re.sub(r"<title[^>]*>.*?</title>", f"<title>{payload.get('clinicName','')} | シカキンセラピー</title>", text, count=1, flags=re.S)
 
     target = ROOT / slug
