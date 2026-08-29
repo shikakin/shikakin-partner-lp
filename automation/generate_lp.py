@@ -7,6 +7,18 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MASTER = ROOT / "master" / "index.html"
 
+LEGACY_TDC = {
+    "clinic_full": "福岡歯科 統合医療研究所DC（歯科室）",
+    "clinic_short": "福岡歯科 TDC",
+    "website": "https://418.co.jp/tdc/",
+    "postal": "〒103-0025",
+    "address": "東京都中央区日本橋茅場町1-10-5 エフワンビル4F",
+    "tel": "03-3662-0222",
+    "tel_compact": "0336620222",
+    "director": "藤 兼次",
+    "therapist": "山本 江里香",
+}
+
 
 def js_string(value):
     return json.dumps(value or "", ensure_ascii=False)
@@ -75,20 +87,61 @@ def normalize_staff(items, role_default):
     return out
 
 
-def inject_staff_runtime(text):
-    """Always rebuild staff cards from the generated clinic config.
+def tel_href(tel):
+    compact = re.sub(r"[^0-9+]", "", str(tel or ""))
+    return f"tel:{compact}" if compact else ""
 
-    Staff cards never use staff-photo fallbacks embedded in MASTER. This prevents
-    a newly generated clinic from inheriting another clinic's doctor/therapist photo.
-    """
-    marker = "/* SHIKAKIN_DYNAMIC_STAFF_RUNTIME_V1 */"
+
+def sanitize_legacy_tdc(text, payload, doctors, therapists):
+    """Remove clinic-specific TDC values that were embedded in the historical MASTER."""
+    clinic_name = str(payload.get("clinicName") or "認定パートナー歯科医院")
+    website = str(payload.get("website") or "")
+    address = str(payload.get("address") or "")
+    tel = str(payload.get("tel") or "")
+    director = doctors[0].get("name", "") if doctors else ""
+    therapist = therapists[0].get("name", "") if therapists else ""
+
+    replacements = {
+        LEGACY_TDC["clinic_full"]: clinic_name,
+        LEGACY_TDC["clinic_short"]: clinic_name,
+        LEGACY_TDC["website"]: website,
+        LEGACY_TDC["postal"]: "",
+        LEGACY_TDC["address"]: address,
+        LEGACY_TDC["tel"]: tel,
+        LEGACY_TDC["tel_compact"]: re.sub(r"[^0-9+]", "", tel),
+        LEGACY_TDC["director"]: director,
+        LEGACY_TDC["therapist"]: therapist,
+    }
+    for old, new in replacements.items():
+        if old:
+            text = text.replace(old, new)
+
+    # Remove any historical image URL/path that explicitly references fukuoka-tdc.
+    text = re.sub(r"https?://[^\"'\s<>]*fukuoka-tdc[^\"'\s<>]*", "", text, flags=re.I)
+    text = re.sub(r"[^\"'\s<>]*\/fukuoka-tdc\/[^\"'\s<>]*", "", text, flags=re.I)
+    return text
+
+
+def inject_runtime(text):
+    marker = "/* SHIKAKIN_DYNAMIC_RUNTIME_V2 */"
     if marker in text:
         return text
 
     script = r'''
 <script>
-/* SHIKAKIN_DYNAMIC_STAFF_RUNTIME_V1 */
+/* SHIKAKIN_DYNAMIC_RUNTIME_V2 */
 (function () {
+  function getConfig() {
+    return (typeof SHIKAKIN_LP_CONFIG !== 'undefined' && SHIKAKIN_LP_CONFIG) ? SHIKAKIN_LP_CONFIG : {};
+  }
+
+  function setHref(selector, href) {
+    if (!href) return;
+    document.querySelectorAll(selector).forEach(function (el) {
+      el.setAttribute('href', href);
+    });
+  }
+
   function buildStaffCard(item) {
     const article = document.createElement('article');
     article.className = 'staff-card';
@@ -111,15 +164,12 @@ def inject_staff_runtime(text):
 
     const meta = document.createElement('div');
     meta.className = 'staff-meta';
-
     const position = document.createElement('div');
     position.className = 'staff-position';
     position.textContent = [item && item.role, item && item.title].filter(Boolean).join(' / ');
-
     const name = document.createElement('div');
     name.className = 'staff-name';
     name.textContent = String((item && item.name) || '');
-
     meta.appendChild(position);
     meta.appendChild(name);
     article.appendChild(photoWrap);
@@ -137,9 +187,22 @@ def inject_staff_runtime(text):
   }
 
   function apply() {
-    if (typeof SHIKAKIN_LP_CONFIG === 'undefined') return;
-    rebuild('doctorStaffGrid', SHIKAKIN_LP_CONFIG.doctors);
-    rebuild('therapistStaffGrid', SHIKAKIN_LP_CONFIG.therapists);
+    const cfg = getConfig();
+    const phone = String(cfg.tel || '').replace(/[^0-9+]/g, '');
+    const phoneUrl = phone ? ('tel:' + phone) : '';
+    const mainUrl = String(cfg.ctaMainUrl || cfg.reservationUrl || cfg.lineUrl || phoneUrl || cfg.sourceWebsiteUrl || '').trim();
+    const reservationUrl = String(cfg.reservationUrl || mainUrl).trim();
+    const lineUrl = String(cfg.lineUrl || cfg.sourceWebsiteUrl || mainUrl).trim();
+    const websiteUrl = String(cfg.sourceWebsiteUrl || mainUrl).trim();
+
+    // Always overwrite every clinic-specific link at runtime. Static MASTER href values are never trusted.
+    setHref('[data-href="ctaMainUrl"]', mainUrl);
+    setHref('[data-href="reservationUrl"]', reservationUrl);
+    setHref('[data-href="lineUrl"]', lineUrl);
+    setHref('[data-href="sourceWebsiteUrl"]', websiteUrl);
+
+    rebuild('doctorStaffGrid', cfg.doctors);
+    rebuild('therapistStaffGrid', cfg.therapists);
   }
 
   if (document.readyState === 'loading') {
@@ -156,14 +219,38 @@ def inject_staff_runtime(text):
     return text + script
 
 
-def validate_generated(text, doctors, therapists):
+def validate_generated(text, payload, doctors, therapists, cta_main_url):
     for item in doctors + therapists:
         if item.get("name") and item["name"] not in text:
             raise SystemExit(f"staff name missing from generated HTML: {item['name']}")
         if item.get("photo") and item["photo"] not in text:
             raise SystemExit(f"staff photo missing from generated HTML: {item['name']}")
-    if "SHIKAKIN_DYNAMIC_STAFF_RUNTIME_V1" not in text:
-        raise SystemExit("dynamic staff runtime injection failed")
+
+    for key in ("clinicName", "website", "address", "tel", "access"):
+        value = str(payload.get(key) or "").strip()
+        if value and value not in text:
+            raise SystemExit(f"{key} missing from generated HTML")
+
+    if cta_main_url and cta_main_url not in text:
+        raise SystemExit("CTA URL missing from generated HTML")
+    if "SHIKAKIN_DYNAMIC_RUNTIME_V2" not in text:
+        raise SystemExit("dynamic runtime injection failed")
+
+    # A new clinic must never inherit historical TDC content.
+    current_clinic = str(payload.get("clinicName") or "")
+    if current_clinic != LEGACY_TDC["clinic_full"]:
+        forbidden = [
+            LEGACY_TDC["clinic_full"],
+            LEGACY_TDC["clinic_short"],
+            LEGACY_TDC["website"],
+            LEGACY_TDC["address"],
+            LEGACY_TDC["tel"],
+            LEGACY_TDC["tel_compact"],
+            "/fukuoka-tdc/",
+        ]
+        leaks = [value for value in forbidden if value and value in text]
+        if leaks:
+            raise SystemExit("legacy clinic data remains in generated HTML: " + ", ".join(leaks))
 
 
 def main():
@@ -181,14 +268,29 @@ def main():
     doctors = normalize_staff(payload.get("doctors"), "院長")
     therapists = normalize_staff(payload.get("therapists"), "シカキンセラピスト")
 
+    website = str(payload.get("website") or "").strip()
+    reservation_url = str(payload.get("reservationUrl") or "").strip()
+    line_url = str(payload.get("lineUrl") or "").strip()
+    tel = str(payload.get("tel") or "").strip()
+    phone_url = tel_href(tel)
+    cta_main_url = reservation_url or line_url or phone_url or website
+
+    # First neutralize every known clinic-specific value inherited from the historical TDC file.
+    text = sanitize_legacy_tdc(text, payload, doctors, therapists)
+
     scalar_fields = {
-        "sourceWebsiteUrl": payload.get("website", ""),
+        "sourceWebsiteUrl": website,
         "clinicName": payload.get("clinicName", ""),
-        "reservationUrl": payload.get("reservationUrl", ""),
-        "lineUrl": payload.get("lineUrl", ""),
+        "clinicShort": payload.get("clinicName", ""),
+        "reservationUrl": reservation_url,
+        "lineUrl": line_url,
         "address": payload.get("address", ""),
-        "tel": payload.get("tel", ""),
+        "tel": tel,
         "access": payload.get("access", ""),
+        "ctaMainLabel": "初回相談はこちら",
+        "ctaMainUrl": cta_main_url,
+        "reservationCtaLabel": "WEB予約はこちら" if reservation_url else "ご予約・ご相談",
+        "lineCtaLabel": "LINEで相談" if line_url else "医院公式サイト",
         "directorName": doctors[0].get("name", "") if doctors else "",
         "directorRole": doctors[0].get("role", "院長") if doctors else "院長",
         "therapistName": therapists[0].get("name", "") if therapists else "",
@@ -201,7 +303,7 @@ def main():
     text = replace_array(text, "doctors", doctors)
     text = replace_array(text, "therapists", therapists)
 
-    # Preserve all fixed MASTER images. Override only keys supplied for this clinic.
+    # Preserve common MASTER images. Only clinic staff images are overridden.
     image_overrides = dict(payload.get("images") or {})
     image_overrides["directorImage"] = doctors[0].get("photo", "") if doctors else ""
     image_overrides["therapistImage"] = therapists[0].get("photo", "") if therapists else ""
@@ -209,7 +311,7 @@ def main():
         text = replace_scalar(text, key, value)
 
     if payload.get("clinicIntro"):
-        text = text.replace("{{CLINIC_INTRO}}", payload["clinicIntro"])
+        text = text.replace("{{CLINIC_INTRO}}", str(payload["clinicIntro"]))
 
     text = re.sub(
         r"<title[^>]*>.*?</title>",
@@ -219,8 +321,8 @@ def main():
         flags=re.S,
     )
 
-    text = inject_staff_runtime(text)
-    validate_generated(text, doctors, therapists)
+    text = inject_runtime(text)
+    validate_generated(text, payload, doctors, therapists, cta_main_url)
 
     target = ROOT / slug
     target.mkdir(parents=True, exist_ok=True)
