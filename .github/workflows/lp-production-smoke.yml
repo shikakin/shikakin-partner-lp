@@ -1,0 +1,41 @@
+name: LP Production Smoke Test
+
+on:
+  push:
+    paths:
+      - '.github/workflows/lp-production-smoke.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate production-like clinic LP
+        env:
+          CLINIC_PAYLOAD: >-
+            {"slug":"system-smoke-validation","clinicName":"シカキン公開検証歯科","website":"https://example.com/clinic","address":"東京都千代田区丸の内1-1-1","tel":"03-1234-5678","access":"東京駅徒歩1分","reservationUrl":"https://example.com/reserve","lineUrl":"https://line.me/R/ti/p/@example","clinicIntro":"公開経路検証用医院です。","doctors":[{"name":"検証 太郎","role":"院長","photo":"director-test.jpg"}],"therapists":[{"name":"検証 花子","role":"歯科衛生士","photo":"therapist-test.jpg"}]}
+        run: python3 automation/generate_lp_v2.py
+
+      - name: Validate before commit
+        run: |
+          FILE="system-smoke-validation/index.html"
+          test -s "$FILE"
+          grep -Fq 'シカキン公開検証歯科' "$FILE"
+          grep -Fq 'https://example.com/reserve' "$FILE"
+          ! grep -Fq '03-3662-0222' "$FILE"
+          ! grep -Fq '福岡歯科 統合医療研究所DC（歯科室）' "$FILE"
+          echo 'Production smoke validation passed'
+
+      - name: Commit smoke clinic
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add system-smoke-validation/index.html
+          git commit -m "Add LP production smoke test page"
+          git push
