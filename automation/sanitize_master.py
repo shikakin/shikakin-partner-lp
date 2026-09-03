@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from pathlib import Path
-import re
 
 MASTER = Path(__file__).resolve().parents[1] / "master" / "index.html"
 
@@ -21,25 +20,61 @@ FORBIDDEN = tuple(REPLACEMENTS.keys()) + ("/fukuoka-tdc/",)
 
 
 def set_scalar(text, key, value):
-    pattern = re.compile(rf"(\b{re.escape(key)}\s*:\s*)(['\"])(.*?)(?<!\\)\2", re.S)
-    m = pattern.search(text)
-    if not m:
+    """Replace a quoted JS scalar in linear time.
+
+    MASTER contains multi-megabyte base64 images, so whole-document DOTALL regexes
+    are intentionally avoided.
+    """
+    marker = key + ":"
+    start = text.find(marker)
+    if start < 0:
         return text
-    escaped = value.replace('\\', '\\\\').replace('"', '\\"')
-    return text[:m.start()] + m.group(1) + '"' + escaped + '"' + text[m.end():]
+
+    pos = start + len(marker)
+    while pos < len(text) and text[pos].isspace():
+        pos += 1
+    if pos >= len(text) or text[pos] not in ('"', "'"):
+        return text
+
+    quote = text[pos]
+    value_start = pos + 1
+    i = value_start
+    escaped = False
+    while i < len(text):
+        ch = text[i]
+        if escaped:
+            escaped = False
+        elif ch == "\\":
+            escaped = True
+        elif ch == quote:
+            escaped_value = value.replace("\\", "\\\\").replace(quote, "\\" + quote)
+            return text[:value_start] + escaped_value + text[i:]
+        i += 1
+    return text
+
+
+def replace_title(text):
+    start = text.find("<title")
+    if start < 0:
+        return text
+    end = text.find("</title>", start)
+    if end < 0:
+        return text
+    end += len("</title>")
+    replacement = '<title data-shikakin-title="">シカキンLPテンプレート | 歯科筋筋膜セラピー</title>'
+    return text[:start] + replacement + text[end:]
 
 
 def main():
     text = MASTER.read_text(encoding="utf-8")
+    if not text.strip():
+        raise SystemExit("MASTER is empty")
 
+    # Literal replacements are linear and safe even with embedded base64 images.
     for old, new in REPLACEMENTS.items():
         text = text.replace(old, new)
 
-    # Remove any historical staff-image URL/path that explicitly belongs to TDC.
-    text = re.sub(r"https?://[^\"'\s<>]*fukuoka-tdc[^\"'\s<>]*", "", text, flags=re.I)
-    text = re.sub(r"[^\"'\s<>]*\/fukuoka-tdc\/[^\"'\s<>]*", "", text, flags=re.I)
-
-    # MASTER defaults are intentionally generic/empty. Clinic values come only from payload.
+    # MASTER defaults are generic/empty. Clinic values come only from payload.
     defaults = {
         "sourceWebsiteUrl": "",
         "clinicName": "〇〇歯科医院",
@@ -61,13 +96,7 @@ def main():
     for key, value in defaults.items():
         text = set_scalar(text, key, value)
 
-    text = re.sub(
-        r"<title[^>]*>.*?</title>",
-        "<title data-shikakin-title=\"\">シカキンLPテンプレート | 歯科筋筋膜セラピー</title>",
-        text,
-        count=1,
-        flags=re.S,
-    )
+    text = replace_title(text)
 
     leaks = [value for value in FORBIDDEN if value and value in text]
     if leaks:
