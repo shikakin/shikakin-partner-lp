@@ -1,0 +1,32 @@
+name: Sanitize LP MASTER
+
+on:
+  push:
+    paths:
+      - 'automation/sanitize_master.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sanitize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sanitize MASTER
+        run: python3 automation/sanitize_master.py
+
+      - name: Commit sanitized MASTER
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add master/index.html
+          if git diff --cached --quiet; then
+            echo "MASTER already clean"
+            exit 0
+          fi
+          git commit -m "Sanitize LP MASTER clinic-specific data"
+          git push
