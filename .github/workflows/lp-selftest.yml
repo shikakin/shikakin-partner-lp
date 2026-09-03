@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - '.github/workflows/lp-selftest.yml'
+      - 'automation/generate_lp_v2.py'
   workflow_dispatch:
 
 permissions:
@@ -20,7 +21,7 @@ jobs:
         env:
           CLINIC_PAYLOAD: >-
             {"slug":"system-test-validation","clinicName":"シカキン検証歯科","website":"https://example.com/clinic","address":"東京都千代田区丸の内1-1-1","tel":"03-1234-5678","access":"東京駅徒歩1分","reservationUrl":"https://example.com/reserve","lineUrl":"https://line.me/R/ti/p/@example","clinicIntro":"自動生成検証用医院です。","doctors":[{"name":"検証 太郎","role":"院長","photo":"director-test.jpg"}],"therapists":[{"name":"検証 花子","role":"歯科衛生士","photo":"therapist-test.jpg"}]}
-        run: python3 automation/generate_lp.py
+        run: python3 automation/generate_lp_v2.py
 
       - name: Validate generated HTML
         run: |
