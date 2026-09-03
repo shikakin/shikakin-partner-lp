@@ -25,7 +25,7 @@ jobs:
       - name: Generate LP from MASTER
         env:
           CLINIC_PAYLOAD: ${{ inputs.payload }}
-        run: python3 automation/generate_lp.py
+        run: python3 automation/generate_lp_v2.py
 
       - name: Commit generated clinic
         run: |
